@@ -18,7 +18,7 @@ class CategoryFactory extends Factory
     {
         return [
             //
-            'name' => ucwords($this->faker->word)
+            'name' => ucwords($this->faker->word()),
         ];
     }
 }
