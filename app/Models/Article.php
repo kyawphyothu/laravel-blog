@@ -8,4 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class Article extends Model
 {
     use HasFactory;
+
+    public function Category()
+    {
+        return $this->belongsTo('App\Models\Category');
+    }
+
+    public function Comments()
+    {
+        return $this->hasMany('App\Models\Comment');
+    }
 }
