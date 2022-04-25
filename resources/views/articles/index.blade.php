@@ -23,7 +23,11 @@
                 <b class="small">Category: {{ $article->category->name }},</b>
                 <small>
                     By: <b>{{ $article->user->name }},</b>
-                    <b>{{ count($article->comments) }}</b> Comments
+                    @if ( count($article->comments)<=1 )
+                        <b>{{ count($article->comments) }}</b> Comment
+                    @else
+                        <b>{{ count($article->comments) }}</b> Comments
+                    @endif
                 </small>
 
                 <a href="{{ url("/articles/detail/$article->id") }}" class="card-link float-end"> View Detail &raquo; </a>

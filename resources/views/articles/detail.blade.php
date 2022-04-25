@@ -59,7 +59,11 @@
 
         <ul class="list-group mb-3">
             <li class="list-group-item active">
-                <b>Comment ({{ count($article->comments) }})</b>
+                @if ( count($article->comments)<=1 )
+                    <b>Comment ({{ count($article->comments) }})</b>
+                @else
+                    <b>Comments ({{ count($article->comments) }})</b>
+                @endif
             </li>
             @foreach ($article->comments as $comment)
                 <li class="list-group-item">
