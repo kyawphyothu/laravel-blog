@@ -3,7 +3,7 @@
 @section('content')
     <div class="container">
 
-        {{-- alert start--}}
+{{-- alert start--}}
         @if (session('error'))
             <div class="alert alert-warning">
                 {{ session('error') }}
@@ -28,7 +28,7 @@
                 {{ session('info') }}
             </div>
         @endif
-        {{-- alert end --}}
+{{-- alert end --}}
 
         <div class="card mb-2 bg-success text-light">
             <div class="card-body">
@@ -44,14 +44,14 @@
                 By <i>{{ $article->user->name }}</i>
 
                 {{-- AuthServiceProvider မှာ ရှိ --}}
-                {{-- @if ( Gate::allows('btn-article-delete', $article) )
+                @if ( Gate::allows('btn-article-delete', $article) )
                     <a href="{{ url("/articles/delete/$article->id") }}" class="btn btn-warning float-end">Delete</a>
-                @endif --}}
+                @endif
                 {{-- နှစ်ခုထဲကတစ်ခုကိုယူ --}}
                 {{-- @auth --}}
-                    @if ( auth()->user() && auth()->user()->id == $article->user_id )
+                    {{-- @if ( auth()->user() && auth()->user()->id == $article->user_id )
                         <a href="{{ url("/articles/delete/$article->id") }}" class="btn btn-warning float-end">Delete</a>
-                    @endif
+                    @endif --}}
                 {{-- @endauth --}}
                 {{--  --}}
             </div>
@@ -63,7 +63,9 @@
             </li>
             @foreach ($article->comments as $comment)
                 <li class="list-group-item">
-                    <a href="{{ url("/comment/delete/$comment->id") }}" class="btn-close float-end"></a>
+                    @if ( Gate::allows('btn-comment-delete', $comment) )
+                        <a href="{{ url("/comment/delete/$comment->id") }}" class="btn-close float-end"></a>
+                    @endif
                     {{ $comment->content }}
                     <div class="small mt-2">
                         By <b>{{ $comment->user->name }}</b>
