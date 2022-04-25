@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Article;
+use App\Models\Category;
+use Illuminate\Support\Facades\Gate;
 
 class ArticleController extends Controller
 {
@@ -31,13 +33,10 @@ class ArticleController extends Controller
 
     public function add()
     {
-        $data = [
-            ["id"=>1, "name"=> "News"],
-            ["id"=>2, "name"=> "Tech"],
-        ];
+        $data = Category::all();
 
         return view('articles.app', [
-            'categories' => $data
+            'categories' => $data,
         ]);
     }
 
@@ -57,6 +56,7 @@ class ArticleController extends Controller
         $article->title = request()->title;
         $article->body = request()->body;
         $article->category_id = request()->category_id;
+        $article->user_id = request()->user_id;
         $article->save();
 
         return redirect('/articles');
@@ -65,8 +65,13 @@ class ArticleController extends Controller
     public function delete($id)
     {
         $article = Article::find($id);
-        $article->delete();
 
-        return redirect('/articles')->with('info', 'Article deleted');
+        if(Gate::allows('article-delete', $article)){
+            $article->delete();
+            return redirect('/articles')->with('info', 'Article deleted');
+        }else{
+            return back()->with('info', "Unauthorize to Delete Article.");
+        }
+
     }
 }

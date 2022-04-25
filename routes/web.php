@@ -34,7 +34,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 
 //Comment Route
-Route::post('/comment/add', [CommentController::class, 'add']);
+Route::post('/comment/add', [CommentController::class, 'create']);
 Route::get('/comment/delete/{id}', [CommentController::class, 'delete']);
 
 

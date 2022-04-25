@@ -3,6 +3,7 @@
 @section('content')
     <div class="container">
 
+        {{-- alert start--}}
         @if (session('error'))
             <div class="alert alert-warning">
                 {{ session('error') }}
@@ -13,8 +14,23 @@
                 {{ session('DelComSuccess') }}
             </div>
         @endif
+        {{-- @if ($errors->any())
+            <div class="alert alert-warning">
+                <ol>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ol>
+            </div>
+        @endif --}}
+        @if (session('info'))
+            <div class="alert alert-info">
+                {{ session('info') }}
+            </div>
+        @endif
+        {{-- alert end --}}
 
-        <div class="card mb-2">
+        <div class="card mb-2 bg-success text-light">
             <div class="card-body">
                 <h5 class="card-title">{{ $article->title }}</h5>
                 <div class="card-subtitle mb-2 text-muted small">
@@ -24,7 +40,20 @@
                 <p class="card-text">
                     {{ $article->body }}
                 </p>
-                <a href="{{ url("/articles/delete/$article->id") }}" class="btn btn-warning">Delete</a>
+                Category: <b> {{ $article->category->name }}</b>,
+                By <i>{{ $article->user->name }}</i>
+
+                {{-- AuthServiceProvider မှာ ရှိ --}}
+                {{-- @if ( Gate::allows('btn-article-delete', $article) )
+                    <a href="{{ url("/articles/delete/$article->id") }}" class="btn btn-warning float-end">Delete</a>
+                @endif --}}
+                {{-- နှစ်ခုထဲကတစ်ခုကိုယူ --}}
+                {{-- @auth --}}
+                    @if ( auth()->user() && auth()->user()->id == $article->user_id )
+                        <a href="{{ url("/articles/delete/$article->id") }}" class="btn btn-warning float-end">Delete</a>
+                    @endif
+                {{-- @endauth --}}
+                {{--  --}}
             </div>
         </div>
 

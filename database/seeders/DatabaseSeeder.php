@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
     {
         Article::factory()->count(20)->create();
         Category::factory(5)->create();
-        Comment::factory(50)->create();
+        Comment::factory(100)->create();
 
         User::factory()->create([
             'name' => "Alice",

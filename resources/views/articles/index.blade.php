@@ -20,7 +20,13 @@
                 <p class="card-text">
                     {{ $article->body }}
                 </p>
-                <a href="{{ url("/articles/detail/$article->id") }}" class="card-link"> View Detail &raquo; </a>
+                <b class="small">Category: {{ $article->category->name }},</b>
+                <small>
+                    By: <b>{{ $article->user->name }},</b>
+                    <b>{{ count($article->comments) }}</b> Comments
+                </small>
+
+                <a href="{{ url("/articles/detail/$article->id") }}" class="card-link float-end"> View Detail &raquo; </a>
             </div>
         </div>
     @endforeach

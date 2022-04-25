@@ -15,6 +15,7 @@
 
         <form action="" method="POST">
             @csrf
+            <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
             <div class="mb-3">
                 <label for="title">Title</label>
                 <input type="text" name="title" class="form-control">
